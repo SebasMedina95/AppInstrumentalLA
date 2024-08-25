@@ -6,6 +6,11 @@ interface ProductProps {
 
 const Product: React.FC<ProductProps> = ({myProd}) => {
 
+  const myHandleClick = (product: IProduct) => {
+    console.log(`Hemos seleccionado el producto:`);
+    console.log({product});
+  }
+
   return (
     <>
 
@@ -20,6 +25,7 @@ const Product: React.FC<ProductProps> = ({myProd}) => {
                 <button 
                     type="button"
                     className="btn btn-dark w-100"
+                    onClick={ () => myHandleClick(myProd) }
                 >Agregar al Carrito</button>
             </div>
         </div>
