@@ -7,13 +7,37 @@ import { db } from "./db/data";
 
 function App() {
 
+  //Para contener la información que traemos de "Base de Datos"
   const [data, setData] = useState<IProduct[]>([]);
 
   useEffect(() => {
     setData(db);
   }, [])
 
+  //Para contener elementos del carrito
+  const [cart, setCart] = useState<IProduct[]>([]);
 
+  //Acción expresa para ir capturando y enviando al carrito
+  function addToCart(item: IProduct){
+
+    //Uso findIndex para poder capturar el index para operar mejor
+    const findExist = cart.findIndex(element => element.id === item.id);
+
+    if(findExist >= 0){ //Si no existe aún ...
+
+      const updateCart = [...cart]; //Creo una copia del carrito
+      updateCart[findExist].quantity!++; //Me ubico en la posición del carrito encontrada y aumento la cantidad
+      setCart(updateCart);
+
+
+    }else{
+
+      item.quantity = 1;
+      setCart(preventCart => [...preventCart, item]);
+
+    }
+
+  }
 
   return (
     <>
@@ -27,7 +51,12 @@ function App() {
             {
 
               data.map( p => (
-                <Product key={ p.id } myProd={p} />
+                <Product 
+                  key={ p.id } 
+                  myProd={p}
+                  cart={cart}
+                  addToCart={addToCart}
+                />
               ))
 
             }

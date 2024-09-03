@@ -1,15 +1,13 @@
 import { IProduct } from "../interfaces/IProduct";
+import React from 'react';
 
 interface ProductProps {
     myProd: IProduct;
+    cart: IProduct[];
+    addToCart: (item: IProduct) => void; // Metodo descriptivo
 }
 
-const Product: React.FC<ProductProps> = ({myProd}) => {
-
-  const myHandleClick = (product: IProduct) => {
-    console.log(`Hemos seleccionado el producto:`);
-    console.log({product});
-  }
+const Product: React.FC<ProductProps> = ({myProd, addToCart}) => {
 
   return (
     <>
@@ -25,7 +23,7 @@ const Product: React.FC<ProductProps> = ({myProd}) => {
                 <button 
                     type="button"
                     className="btn btn-dark w-100"
-                    onClick={ () => myHandleClick(myProd) }
+                    onClick={ () => addToCart(myProd) }
                 >Agregar al Carrito</button>
             </div>
         </div>
