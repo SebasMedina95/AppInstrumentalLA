@@ -17,6 +17,10 @@ function App() {
   //Para contener elementos del carrito
   const [cart, setCart] = useState<IProduct[]>([]);
 
+  //Elementos constantes
+  const MAX_ITEMS: number = 5;
+  const MIN_ITEMS: number = 1;
+
   //Acción expresa para ir capturando y enviando al carrito
   function addToCart(item: IProduct){
 
@@ -39,10 +43,52 @@ function App() {
 
   }
 
+  //Acción expresa para eliminar elementos del carrito
+  function removeFromCart(id: number){
+    setCart(preventCart => preventCart.filter( (f) => f.id !== id ));
+  }
+
+  //Incrementar cantidad a llevar
+  function increaseQuantity(id: number){
+    const updateCart = cart.map( item => {
+      if(item.id === id && item.quantity! < MAX_ITEMS) { //Limitamos a 5
+        return {
+          ... item,
+          quantity: item.quantity! + 1
+        }
+      }
+      return item;
+    })
+
+    setCart(updateCart);
+  }
+
+  //Decrementar cantidad a llevar
+  function decrementQuantity(id: number){
+    const updateCart = cart.map( item => {
+      if(item.id === id) {
+        if( item.quantity !== MIN_ITEMS ){
+          return {
+            ... item,
+            quantity: item.quantity! - 1
+          }
+        }
+      }
+      return item;
+    })
+
+    setCart(updateCart);
+  }
+
+  
+
   return (
     <>
       <Header
         cart = {cart}
+        removeFromCart={removeFromCart}
+        increaseQuantity={increaseQuantity}
+        decrementQuantity={decrementQuantity}
       />
 
       <main className="container-xl mt-5">
