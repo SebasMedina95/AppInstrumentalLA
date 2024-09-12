@@ -7,13 +7,15 @@ interface ProductProps {
   removeFromCart: (id: number) => void;
   increaseQuantity: (id: number) => void;
   decrementQuantity: (id: number) => void;
+  clearCart: () => void;
 }
 
 const Header: React.FC<ProductProps> = ({
   cart, 
   removeFromCart, 
   increaseQuantity, 
-  decrementQuantity
+  decrementQuantity,
+  clearCart
 }) => {
 
   //Ir sumando los valores. El reduce es especial para estos casos
@@ -114,7 +116,7 @@ const Header: React.FC<ProductProps> = ({
 
                         {/* Al usar el useMemo, ya no necesitamos cartTotal() con los parentesis, los quitamos porque estamos memorizando */}
                         <p className="text-end">Total pagar: <span className="fw-bold">${ cartTotal }</span></p>
-                        <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                        <button className="btn btn-dark w-100 mt-3 p-2" onClick={ clearCart }>Vaciar Carrito</button>
 
                       </>
 
