@@ -23,14 +23,14 @@ function App() {
     //Uso findIndex para poder capturar el index para operar mejor
     const findExist = cart.findIndex(element => element.id === item.id);
 
-    if(findExist >= 0){ //Si no existe aún ...
+    if(findExist >= 0){ //Si ya existe ...
 
       const updateCart = [...cart]; //Creo una copia del carrito
       updateCart[findExist].quantity!++; //Me ubico en la posición del carrito encontrada y aumento la cantidad
       setCart(updateCart);
 
 
-    }else{
+    }else{ //Si no existía
 
       item.quantity = 1;
       setCart(preventCart => [...preventCart, item]);
@@ -41,7 +41,9 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header
+        cart = {cart}
+      />
 
       <main className="container-xl mt-5">
           <h2 className="text-center">Nuestra Colección</h2>

@@ -1,5 +1,10 @@
+import { IProduct } from "../interfaces/IProduct";
 
-const ShoppingCart = () => {
+interface ProductProps {
+    cart: IProduct[];
+  }
+
+const ShoppingCart: React.FC<ProductProps> = ({cart}) => {
 
   return (
     <>
@@ -22,38 +27,46 @@ const ShoppingCart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <img className="img-fluid" src="./public/img/guitarra_02.jpg" alt="imagen guitarra" />
-                            </td>
-                            <td>SRV</td>
-                            <td className="fw-bold">
-                                    $299
-                            </td>
-                            <td className="flex align-items-start gap-4">
-                                <button
-                                    type="button"
-                                    className="btn btn-dark"
-                                >
-                                    -
-                                </button>
-                                    1
-                                <button
-                                    type="button"
-                                    className="btn btn-dark"
-                                >
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <button
-                                    className="btn btn-danger"
-                                    type="button"
-                                >
-                                    X
-                                </button>
-                            </td>
-                        </tr>
+
+                        {
+                            cart.map( pc => (
+
+                                <tr>
+                                    <td>
+                                        <img className="img-fluid" src={`./public/img/${pc.image}.jpg`} alt="imagen producto" />
+                                    </td>
+                                    <td>{pc.name}</td>
+                                    <td className="fw-bold">
+                                            ${pc.price}
+                                    </td>
+                                    <td className="flex align-items-start gap-4">
+                                        <button
+                                            type="button"
+                                            className="btn btn-dark"
+                                        >
+                                            -
+                                        </button>
+                                            { pc.quantity }
+                                        <button
+                                            type="button"
+                                            className="btn btn-dark"
+                                        >
+                                            +
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            className="btn btn-danger"
+                                            type="button"
+                                        >
+                                            X
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            ))
+                        }
+
                     </tbody>
                 </table>
 
