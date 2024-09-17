@@ -7,19 +7,32 @@ import { db } from "./db/data";
 
 function App() {
 
+  //Para evaluar el estado inicial del carrito
+  const initalStateCart = (): IProduct[] => {
+    const localStorageCart = localStorage.getItem("cartInstrumentsLa");
+    return localStorageCart ? JSON.parse(localStorageCart) : [];
+  }
+
   //Para contener la información que traemos de "Base de Datos"
   const [data, setData] = useState<IProduct[]>([]);
 
   useEffect(() => {
     setData(db);
-  }, [])
+  }, []);
 
   //Para contener elementos del carrito
-  const [cart, setCart] = useState<IProduct[]>([]);
+  const [cart, setCart] = useState<IProduct[]>(initalStateCart);
 
   //Elementos constantes
   const MAX_ITEMS: number = 5;
   const MIN_ITEMS: number = 1;
+
+  //*Para el LocalStorage
+  //Siempre que cambie de estado el carrito se dispara esta función.
+  useEffect(() => {
+    //Le mando como parámetro el state que tiene los valores
+    localStorage.setItem('cartInstrumentsLa', JSON.stringify(cart));
+  }, [cart]);
 
   //Acción expresa para ir capturando y enviando al carrito
   function addToCart(item: IProduct){
