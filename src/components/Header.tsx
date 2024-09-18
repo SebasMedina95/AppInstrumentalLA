@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { IProduct } from "../interfaces/IProduct";
 // import ShoppingCart from "./ShoppingCart";
 
@@ -8,6 +7,8 @@ interface ProductProps {
   increaseQuantity: (id: number) => void;
   decrementQuantity: (id: number) => void;
   clearCart: () => void;
+  isEmpty: boolean;
+  cartTotal: number;
 }
 
 const Header: React.FC<ProductProps> = ({
@@ -15,17 +16,13 @@ const Header: React.FC<ProductProps> = ({
   removeFromCart, 
   increaseQuantity, 
   decrementQuantity,
-  clearCart
+  clearCart,
+  isEmpty,
+  cartTotal
 }) => {
 
   //Ir sumando los valores. El reduce es especial para estos casos
   //const cartTotal = () => cart.reduce( (total, item) => total + Number(item.price * item.quantity!), 0 );
-
-  //?Podemos memorizar si queremos mejorar el performance, en este ejemplo no es que sea tan necesario pero:
-  //Cada vez que agreguemos o quitemos elementos a cart ejecutemos este código
-  const isEmpty = useMemo( () => cart.length === 0, [cart]);
-  //Cada vez que agreguemos o quitemos elementos a cart ejecutemos este código
-  const cartTotal = useMemo( () => cart.reduce( (total, item) => total + Number(item.price * item.quantity!), 0 ), [cart]);
 
   return (
     <>
